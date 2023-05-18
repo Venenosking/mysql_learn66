@@ -59,7 +59,7 @@ while qa_dict:
     # 将英文部分连接成字符串并转换为小写进行比较
     s1_combined = ''.join(s1_english).lower()
     s2_combined = ''.join(s2_english).lower()
-    # print('\033[31m'+'hello'+'\033[0m') 字体颜
+    # print('\033[31m'+'hello'+'\033[0m') 字体颜色
     # 判断两个字符串是否相等
     if s1_combined == s2_combined:
         print('回答正确 '+'\033[31m'+'√'+'\033[0m')
