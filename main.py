@@ -71,6 +71,6 @@ while qa_dict:
 # print("\n")
 print("\nSuccess,"+str(n-1)+"个问题全部答完,继续加油哦!")
 
-#12
+
 
 
