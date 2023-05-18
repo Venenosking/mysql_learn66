@@ -65,6 +65,7 @@ while qa_dict:
         print('回答正确 '+'\033[31m'+'√'+'\033[0m')
     else:
         print('回答错误 '+'\033[32m'+'×'+'\033[0m')
+        user_input = input("照着答案再写一遍: ")
 
     # 从字典中删除已经回答过的问题
     del qa_dict[random_question]
