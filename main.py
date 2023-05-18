@@ -69,7 +69,7 @@ while qa_dict:
     # 从字典中删除已经回答过的问题
     del qa_dict[random_question]
 # print("\n")
-print("\nSuccess,"+str(n-1)+"个问题全部答完!")
+print("\nSuccess,"+str(n-1)+"个问题全部答完,继续加油哦!")
 
 
 
