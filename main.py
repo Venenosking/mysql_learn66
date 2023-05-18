@@ -71,6 +71,6 @@ while qa_dict:
 # print("\n")
 print("\nSuccess,"+str(n-1)+"个问题全部答完!")
 
-# python程序,如何判断两个字符串里面的英文部分是否全部相等,例如 s1='alter table 表名 drop primary key;'  s2='alter table 表名称 drop primary key;'
+
 
 
