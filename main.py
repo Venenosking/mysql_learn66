@@ -1,7 +1,7 @@
 
 # 写一个Python程序,先把问题分类,然后从里面随便抽取一个问题,然后获取用户输入,用户输入完之后,在把对应的答案输出来,循环上述操作,直到所有问题都被抽取完
 # 写一个Python程序,查看当前目录下是否有操作开头的py文件,有的话就导入该文件的全部内容
-import random
+import random,re
 # from 操作数据表 import *
 # from 操作视图 import *
 g_module=[]
@@ -33,6 +33,7 @@ print('总共有'+str(len(qa_dict))+'个问题')
 print('涉及: '+','.join(g_module))
 # 循环抽取问题和输出答案
 n=1
+error_list=[]
 while qa_dict:
     # 随机选择一个问题
 
@@ -45,11 +46,31 @@ while qa_dict:
     n+=1
 
     # 输出对应的答案
-    print("答案:"+qa_dict[random_question])
+    print("答案:    "+qa_dict[random_question])
+
+    # 判断用户输入是否跟答案一致
+    s1=user_input
+    s2=qa_dict[random_question]
+    # 使用正则表达式提取字符串中的英文部分
+    pattern = re.compile('[a-zA-Z]+')
+    s1_english = pattern.findall(s1)
+    s2_english = pattern.findall(s2)
+
+    # 将英文部分连接成字符串并转换为小写进行比较
+    s1_combined = ''.join(s1_english).lower()
+    s2_combined = ''.join(s2_english).lower()
+
+    # 判断两个字符串是否相等
+    if s1_combined == s2_combined:
+        print('回答正确 √')
+    else:
+        print('回答错误 ×')
 
     # 从字典中删除已经回答过的问题
     del qa_dict[random_question]
 # print("\n")
 print("\nSuccess,"+str(n-1)+"个问题全部答完!")
+
+# python程序,如何判断两个字符串里面的英文部分是否全部相等,例如 s1='alter table 表名 drop primary key;'  s2='alter table 表名称 drop primary key;'
 
 
