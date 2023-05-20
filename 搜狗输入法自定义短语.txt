@@ -68,6 +68,7 @@ mys,1=mysql
 vie,1=view 
 sel,1=select 
 revo,1=revoke 
+add,1=add 
 
 gra,1=grant 
 opt,1=option 
@@ -83,6 +84,7 @@ whil,1=while
 unt,1=until 
 do,1=do 
 engi,1=engine 
+
 
 
 
