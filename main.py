@@ -29,16 +29,50 @@ p_list = [all_vars[var] for var in all_vars if var.startswith('p_')]
 # print(p_list)
 for i in p_list:
     qa_dict.update(i)
-print('总共有'+str(len(qa_dict))+'个问题')
+# print('总共有'+str(len(qa_dict))+'个问题')
+# print('涉及: '+','.join(g_module))
+
+# 给列表添加序号
+for i, item in enumerate(g_module):
+    g_module[i] = f"{i+1}. {item}"
+# print(g_module)
+
 print('涉及: '+','.join(g_module))
+user_input = input("\n请输入要练习的序号: ")
+user_input = eval(user_input)
+# print(user_input)
+# 如果只输入一个数值的话
+if type(user_input)==int:
+    user_input = [user_input]
+new_g_module=[]
+# 判断序号对应的问题
+for i in user_input:
+    # print(i)
+    for j in g_module:
+        if str(i) in j:
+            # print(j)
+            new_g_module.append(j)
+
+new_g_module = [item.split('. ')[1] for item in new_g_module]
+print('你所选择练习项目是: '+','.join(new_g_module))
+qa_dict_list=[]
+# print(list(qa_dict.keys()))
+
+for j in list(qa_dict.keys()):
+    for i in new_g_module:
+        if i in j:
+            qa_dict_list.append(j)
+# print(qa_dict_list)
+print('总共有'+str(len(qa_dict_list))+'个问题')
+    
+    
+    
 # 循环抽取问题和输出答案
 n=1
 error_list=[]
-while qa_dict:
+while qa_dict_list:
     # 随机选择一个问题
-
-    random_question = random.choice(list(qa_dict.keys()))
-
+    random_question = random.choice(qa_dict_list)
     # 获取用户输入
     user_input = input("\n问题"+str(n)+": "+random_question+"\n你的输入: ")
     while not user_input:
@@ -68,7 +102,8 @@ while qa_dict:
         user_input = input("照着答案再写一遍: ")
 
     # 从字典中删除已经回答过的问题
-    del qa_dict[random_question]
+    # del qa_dict[random_question]
+    qa_dict_list.remove(random_question)
 # print("\n")
 print("\nSuccess,"+str(n-1)+"个问题全部答完,继续加油哦!")
 
