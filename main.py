@@ -63,9 +63,10 @@ for i in user_input:
         if str(i) in j:
             # print(j)
             new_g_module.append(j)
-            
-        
-
+# print(new_g_module)
+# 末尾输出练习的项目
+last_learn=[]
+last_learn=new_g_module
 
 new_g_module = [item.split('. ')[1] for item in new_g_module]
 print('你所选择练习项目是: '+','.join(new_g_module))
@@ -120,6 +121,6 @@ while qa_dict_list:
     qa_dict_list.remove(random_question)
 # print("\n")
 print("\nSuccess,"+str(n-1)+"个问题全部答完,继续加油哦!")
-
+print('此次练习的项目是: '+','.join(last_learn))
 
 
