@@ -38,13 +38,24 @@ for i, item in enumerate(g_module):
 # print(g_module)
 
 print('涉及: '+','.join(g_module))
-user_input = input("\n请输入要练习的序号: ")
-user_input = eval(user_input)
-# print(user_input)
-# 如果只输入一个数值的话
-if type(user_input)==int:
-    user_input = [user_input]
 new_g_module=[]
+error_str=''
+ture_str=1
+user_input=''
+while ture_str:
+    user_input = input("\n请输入要练习的序号(逗号): ")
+    user_input = eval(user_input)
+    # print(user_input)
+    # 如果只输入一个数值的话
+    if type(user_input)==int:
+        user_input = [user_input]
+    # 判断输入的序号最大值和最小值都在g_module列表的最大值和最小值范围之内
+    if max(user_input) <= int(re.findall(r'\d+', max(g_module))[0]) and min(user_input) >= int(re.findall(r'\d+', min(g_module))[0]):
+        ture_str=0
+    else:
+        print('你输入的序号不对,重新输入!')
+        
+
 # 判断序号对应的问题
 for i in user_input:
     # print(i)
@@ -52,6 +63,9 @@ for i in user_input:
         if str(i) in j:
             # print(j)
             new_g_module.append(j)
+            
+        
+
 
 new_g_module = [item.split('. ')[1] for item in new_g_module]
 print('你所选择练习项目是: '+','.join(new_g_module))
