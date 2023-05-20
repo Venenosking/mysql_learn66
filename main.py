@@ -122,5 +122,7 @@ while qa_dict_list:
 # print("\n")
 print("\nSuccess,"+str(n-1)+"个问题全部答完,继续加油哦!")
 print('此次练习的项目是: '+','.join(last_learn))
-
+for i in last_learn:
+    g_module.remove(i)
+print('剩余练习的项目是: '+','.join(g_module))
 
