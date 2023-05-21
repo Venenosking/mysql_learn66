@@ -65,7 +65,7 @@ while g_module:
         if max(user_input) <= int(re.findall(r'\d+', max(g_module))[0]) and min(user_input) >= int(re.findall(r'\d+', min(g_module))[0]):
             ture_str=0
         else:
-            print('你输入的序号不对,重新输入!')
+            print('你输入的序号不在范围之内,重新输入!')
             
     
     # 判断序号对应的问题
