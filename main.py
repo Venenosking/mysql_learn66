@@ -38,91 +38,110 @@ for i, item in enumerate(g_module):
 # print(g_module)
 
 print('涉及: '+','.join(g_module))
-new_g_module=[]
+# new_g_module=[]
+# 定义已经练习过的项目列表
+# has_learn=[]
+last_learn=[]
 error_str=''
 ture_str=1
 user_input=''
-while ture_str:
-    user_input = input("\n请输入要练习的序号(逗号): ")
-    user_input = eval(user_input)
-    # print(user_input)
-    # 如果只输入一个数值的话
-    if type(user_input)==int:
-        user_input = [user_input]
-    # 判断输入的序号最大值和最小值都在g_module列表的最大值和最小值范围之内
-    if max(user_input) <= int(re.findall(r'\d+', max(g_module))[0]) and min(user_input) >= int(re.findall(r'\d+', min(g_module))[0]):
-        ture_str=0
-    else:
-        print('你输入的序号不对,重新输入!')
+while g_module:
+    new_g_module = []
+    while ture_str:
+        while True:
+            user_input = input("\n请输入要练习的序号(逗号): ")
+            numbers = user_input.split(",")
+            if not all(number.isdigit() for number in numbers):
+                print("你输入的不是数字,请重新输入!")
+                continue
+            break
         
-
-# 判断序号对应的问题
-for i in user_input:
-    # print(i)
-    for j in g_module:
-        if str(i) in j:
-            # print(j)
-            new_g_module.append(j)
-# print(new_g_module)
-# 末尾输出练习的项目
-last_learn=[]
-last_learn=new_g_module
-
-new_g_module = [item.split('. ')[1] for item in new_g_module]
-print('你所选择练习项目是: '+','.join(new_g_module))
-qa_dict_list=[]
-# print(list(qa_dict.keys()))
-
-for j in list(qa_dict.keys()):
-    for i in new_g_module:
-        if i in j:
-            qa_dict_list.append(j)
-# print(qa_dict_list)
-print('总共有'+str(len(qa_dict_list))+'个问题')
+        user_input = eval(user_input)
+        # print(user_input)
+        # 如果只输入一个数值的话
+        if type(user_input)==int:
+            user_input = [user_input]
+        # 判断输入的序号最大值和最小值都在g_module列表的最大值和最小值范围之内
+        if max(user_input) <= int(re.findall(r'\d+', max(g_module))[0]) and min(user_input) >= int(re.findall(r'\d+', min(g_module))[0]):
+            ture_str=0
+        else:
+            print('你输入的序号不对,重新输入!')
+            
     
+    # 判断序号对应的问题
+    for i in user_input:
+        # print(i)
+        for j in g_module:
+            if str(i) in j:
+                # print(j)
+                new_g_module.append(j)
+    # print(new_g_module)
+    # 末尾输出练习的项目
+    last_learn=new_g_module+last_learn
+    # for i in new_g_module:
+    #     last_learn.append(i)
     
+    new_g_module = [item.split('. ')[1] for item in new_g_module]
+    print('你所选择练习项目是: '+','.join(new_g_module))
+    qa_dict_list=[]
+    # print(list(qa_dict.keys()))
     
-# 循环抽取问题和输出答案
-n=1
-error_list=[]
-while qa_dict_list:
-    # 随机选择一个问题
-    random_question = random.choice(qa_dict_list)
-    # 获取用户输入
-    user_input = input("\n问题"+str(n)+": "+random_question+"\n你的输入: ")
-    while not user_input:
-        user_input = input("输入不能为空,请重新输入: ")
-    n+=1
-
-    # 输出对应的答案
-    print("答案:    "+qa_dict[random_question])
-
-    # 判断用户输入是否跟答案一致
-    s1=user_input
-    s2=qa_dict[random_question]
-    # 使用正则表达式提取字符串中的英文部分
-    pattern = re.compile('[a-zA-Z]+')
-    s1_english = pattern.findall(s1)
-    s2_english = pattern.findall(s2)
-
-    # 将英文部分连接成字符串并转换为小写进行比较
-    s1_combined = ''.join(s1_english).lower()
-    s2_combined = ''.join(s2_english).lower()
-    # print('\033[31m'+'hello'+'\033[0m') 字体颜色
-    # 判断两个字符串是否相等
-    if s1_combined == s2_combined:
-        print('回答正确 '+'\033[31m'+'√'+'\033[0m')
+    for j in list(qa_dict.keys()):
+        for i in new_g_module:
+            if i in j:
+                qa_dict_list.append(j)
+    # print(qa_dict_list)
+    print('总共有'+str(len(qa_dict_list))+'个问题')
+        
+        
+        
+    # 循环抽取问题和输出答案
+    n=1
+    error_list=[]
+    while qa_dict_list:
+        # 随机选择一个问题
+        random_question = random.choice(qa_dict_list)
+        # 获取用户输入
+        user_input = input("\n问题"+str(n)+": "+random_question+"\n你的输入: ")
+        while not user_input:
+            user_input = input("输入不能为空,请重新输入: ")
+        n+=1
+    
+        # 输出对应的答案
+        print("答案:    "+qa_dict[random_question])
+    
+        # 判断用户输入是否跟答案一致
+        s1=user_input
+        s2=qa_dict[random_question]
+        # 使用正则表达式提取字符串中的英文部分
+        pattern = re.compile('[a-zA-Z]+')
+        s1_english = pattern.findall(s1)
+        s2_english = pattern.findall(s2)
+    
+        # 将英文部分连接成字符串并转换为小写进行比较
+        s1_combined = ''.join(s1_english).lower()
+        s2_combined = ''.join(s2_english).lower()
+        # print('\033[31m'+'hello'+'\033[0m') 字体颜色
+        # 判断两个字符串是否相等
+        if s1_combined == s2_combined:
+            print('回答正确 '+'\033[31m'+'√'+'\033[0m')
+        else:
+            print('回答错误 '+'\033[32m'+'×'+'\033[0m')
+            user_input = input("照着答案再写一遍: ")
+    
+        # 从字典中删除已经回答过的问题
+        # del qa_dict[random_question]
+        qa_dict_list.remove(random_question)
+    # print("\n")
+    print("\nSuccess,"+str(n-1)+"个问题全部答完,继续加油哦!")
+    print('已经练习的项目是: '+','.join(last_learn))
+    # print(g_module)
+    for i in last_learn:
+        for j in g_module:
+            if i in j:
+                g_module.remove(i)
+    if len(','.join(g_module))>0:
+        print('剩余练习的项目是: '+','.join(g_module))
     else:
-        print('回答错误 '+'\033[32m'+'×'+'\033[0m')
-        user_input = input("照着答案再写一遍: ")
-
-    # 从字典中删除已经回答过的问题
-    # del qa_dict[random_question]
-    qa_dict_list.remove(random_question)
-# print("\n")
-print("\nSuccess,"+str(n-1)+"个问题全部答完,继续加油哦!")
-print('此次练习的项目是: '+','.join(last_learn))
-for i in last_learn:
-    g_module.remove(i)
-print('剩余练习的项目是: '+','.join(g_module))
-
+        print('Success,所有项目都练习完了!')
+    ture_str = 1
