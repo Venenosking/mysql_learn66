@@ -67,6 +67,12 @@ then,1=then
 else,1=else 
 end,1=end 
 if,1=if 
+by,1=by 
+parti,1=partition 
+part,1=part
+reorganize,1=reorganize 
+into,1=into 
+in,1=in 
 
 se,1=set 
 whe,1=where 
