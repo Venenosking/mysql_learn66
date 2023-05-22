@@ -89,6 +89,8 @@ add,1=add
 range,1=range 
 group,1=group 
 having,1=having 
+coalesce,1=coalesce 
+linear,1=linear 
 
 gra,1=grant 
 opt,1=option 
