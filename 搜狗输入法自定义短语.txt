@@ -86,6 +86,9 @@ vie,1=view
 sel,1=select 
 revo,1=revoke 
 add,1=add 
+range,1=range 
+group,1=group 
+having,1=having 
 
 gra,1=grant 
 opt,1=option 
