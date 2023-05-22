@@ -35,7 +35,7 @@ for i in p_list:
 # 给列表添加序号
 for i, item in enumerate(g_module):
     g_module[i] = f"{i+1}. {item}"
-# print(g_module)
+print(g_module)
 
 print('涉及: '+','.join(g_module))
 # new_g_module=[]
@@ -45,6 +45,9 @@ last_learn=[]
 error_str=''
 ture_str=1
 user_input=''
+
+def get_number(item):
+    return int(item.split('.')[0])
 while g_module:
     new_g_module = []
     while ture_str:
@@ -62,7 +65,14 @@ while g_module:
         if type(user_input)==int:
             user_input = [user_input]
         # 判断输入的序号最大值和最小值都在g_module列表的最大值和最小值范围之内
-        if max(user_input) <= int(re.findall(r'\d+', max(g_module))[0]) and min(user_input) >= int(re.findall(r'\d+', min(g_module))[0]):
+        # 找到列表中的最大值和最小值
+        max_item = max(g_module, key=get_number)
+        min_item = min(g_module, key=get_number)
+
+        # print("最大值：", max_item)
+        # print("最小值：", min_item)
+
+        if max(user_input) <= int(re.findall(r'\d+', max_item)[0]) and min(user_input) >= int(re.findall(r'\d+', min_item)[0]):
             ture_str=0
         else:
             print('你输入的序号不在范围之内,重新输入!')
@@ -72,10 +82,10 @@ while g_module:
     for i in user_input:
         # print(i)
         for j in g_module:
-            if str(i) in j:
-                # print(j)
+            if int(i) == int(re.findall(r'\d+', j)[0]):
+                print(j)
                 new_g_module.append(j)
-    # print(new_g_module)
+    print(new_g_module)
     # 末尾输出练习的项目
     last_learn=new_g_module+last_learn
     # for i in new_g_module:
