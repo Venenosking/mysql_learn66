@@ -144,12 +144,29 @@ while g_module:
         qa_dict_list.remove(random_question)
     # print("\n")
     print("\nSuccess,"+str(n-1)+"个问题全部答完,继续加油哦!")
-    print('已经练习的项目是: '+','.join(last_learn))
+    print('已经练习的项目是: '+','.join(list(set(last_learn))))
     # print(g_module)
-    for i in last_learn:
-        for j in g_module:
-            if i in j:
-                g_module.remove(i)
+    # print('是否重新练习该项目: 1是 0否')
+    vrepeat=1
+    # while user_input not in ['0', '1']:
+    #     user_input = input("请输入0或1: ")
+        
+    while vrepeat:
+        repeat_learn = input("是否重新练习该项目 1是 0否: ")
+        try:
+            if repeat_learn in ['0']:
+                for i in last_learn:
+                    for j in g_module:
+                        if i in j:
+                            g_module.remove(i)
+                vrepeat=0
+            if repeat_learn in ['1']:
+                vrepeat = 0
+            if repeat_learn not in ['0','1']:
+                vrepeat = 1
+        except:
+            vrepeat = 1
+                    
     if len(','.join(g_module))>0:
         print('剩余练习的项目是: '+','.join(g_module))
     else:
