@@ -35,7 +35,7 @@ for i in p_list:
 # 给列表添加序号
 for i, item in enumerate(g_module):
     g_module[i] = f"{i+1}. {item}"
-print(g_module)
+# print(g_module)
 
 print('涉及: '+','.join(g_module))
 # new_g_module=[]
@@ -83,9 +83,9 @@ while g_module:
         # print(i)
         for j in g_module:
             if int(i) == int(re.findall(r'\d+', j)[0]):
-                print(j)
+                # print(j)
                 new_g_module.append(j)
-    print(new_g_module)
+    # print(new_g_module)
     # 末尾输出练习的项目
     last_learn=new_g_module+last_learn
     # for i in new_g_module:
