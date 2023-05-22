@@ -65,6 +65,8 @@ on,1=on
 for,1=for 
 then,1=then 
 else,1=else 
+end,1=end 
+if,1=if 
 
 se,1=set 
 whe,1=where 
