@@ -56,6 +56,8 @@ rena,1=rename
 upd,1=update 表名/视图名 
 del,1=delete from 表名 
 ins,1=insert into 表名 
+*,1=* 
+from,1=from 
 
 se,1=set 
 whe,1=where 
