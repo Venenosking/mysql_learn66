@@ -104,12 +104,25 @@ try:
                 del var_value[random_question]
                 # print("剩余:"+str(len(list(var_value.keys()))))
             print("\nSuccess," + str(n - 1) + "个问题全部答完,继续加油哦!")
-            for i in has_lear:
-                try:
-                    files.remove('操作'+i+'.py')
-                except ValueError:
-                    pass
+            # has_lear=list(set(has_lear))
             print('已经练习的项目是: '+','.join(has_lear))
+            while True:
+                num = input("是否需要重新练习 1是 0否: ")
+                print('')
+                if num =='0':
+                    for i in has_lear:
+                        try:
+                            files.remove('操作' + i + '.py')
+                        except ValueError:
+                            pass
+                    break
+                elif num == '1':
+                    for i in choice_list:
+                        has_lear.remove(i)
+                    break
+                else:
+                    continue
+            
             del var_names,module
         else:
             print('输入的序号无效,请重新输入\n')
