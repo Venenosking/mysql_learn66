@@ -7,7 +7,7 @@
 # user_input = input("生成Hash分区表: ")
 
 import random,re,os
-import mysql.connector
+import mysql.connector   #pip3 install mysql-connector-python
 g_module=[]
 # 获取当前目录下以 操作 开头的py文件,并且导入它们的全部内容
 current_dir = os.getcwd()
@@ -159,7 +159,7 @@ if __name__ == "__main__":
             print('\n'.join(key_list))
 
             # 用户输入对应的序号
-            key_num = int(input('请输入对应的序号: '))
+            key_num = int(input('\n请输入对应的序号: '))
 
             # 输出对应的Key内容
             if key_num > 0 and key_num <= len(var_value):
