@@ -144,50 +144,54 @@ if __name__ == "__main__":
             if char_num not in ['+','-','*','/']:
                 continue
             else:
-                break
+                # break
+                module = __import__(module_name)
+                # 获取以"v_"开头的变量名列表
+                var_names = [var_name for var_name in dir(module) if var_name.startswith('v_')]
+                # print(var_names)
+                # for i in var_names:
+                #     print(getattr(module, i))
+                # print(666)
+                # 给每个变量名前面加上序号
+                var_list = []
+                var_value = {}
+                key_list = []
+                # 获取v_字典数据
+                for i, var_name in enumerate(var_names, 1):
+                    new_data = getattr(module, var_name)
+                    # print(var_value)
+                    # 给每个key前面加上序号
+                    for kk in new_data.keys():
+                        if char_num == kk[len(kk) - 1]:
+                            var_value[kk] = new_data[kk]
+                    
+                    # if char_num == key[len(key) - 1]:
+                    for j, key in enumerate(var_value.keys(), 1):
+                        # key_list.append(f'{j}. {key}: {var_value[key]}')
+                        # print(key)
+                        # 判断输入的符号是否等于key的最后一个字符 + - * /
+                        # if char_num ==key[len(key) - 1]:
+                        key_list.append(f'{j}. {key}')
         
-        
-        module = __import__(module_name)
-        # 获取以"v_"开头的变量名列表
-        var_names = [var_name for var_name in dir(module) if var_name.startswith('v_')]
-        # print(var_names)
-        # for i in var_names:
-        #     print(getattr(module, i))
-        # print(666)
-        # 给每个变量名前面加上序号
-        var_list = []
-        var_value = {}
-        # 获取v_字典数据
-        for i, var_name in enumerate(var_names, 1):
-            new_data = getattr(module, var_name)
-            # print(var_value)
-            # 给每个key前面加上序号
-            key_list = []
-            for kk in new_data.keys():
-                if char_num == kk[len(kk) - 1]:
-                    var_value[kk] = new_data[kk]
+                # 打印key列表
+                # print(f'{i}. {var_name}:')
+                if (len(key_list))==0:
+                    print('该部分数据还没有添加进去,请选择其他符号对应的数据!')
+                    continue
+                print('\n'.join(key_list))
+                
+                while True:
+                    # 用户输入对应的序号
+                    key_num = int(input('\n请输入对应的序号: '))
             
-            # if char_num == key[len(key) - 1]:
-            for j, key in enumerate(var_value.keys(), 1):
-                # key_list.append(f'{j}. {key}: {var_value[key]}')
-                # print(key)
-                # 判断输入的符号是否等于key的最后一个字符 + - * /
-                # if char_num ==key[len(key) - 1]:
-                key_list.append(f'{j}. {key}')
-
-            # 打印key列表
-            # print(f'{i}. {var_name}:')
-            print('\n'.join(key_list))
-
-            # 用户输入对应的序号
-            key_num = int(input('\n请输入对应的序号: '))
-
-            # 输出对应的Key内容
-            if key_num > 0 and key_num <= len(var_value):
-                key = list(var_value.keys())[key_num - 1]
-                print(f'{key}: {var_value[key]}'+'\n')
-            else:
-                print('输入的序号无效')
+                    # 输出对应的Key内容
+                    if key_num > 0 and key_num <= len(var_value):
+                        key = list(var_value.keys())[key_num - 1]
+                        print(f'{key}: {var_value[key]}'+'\n')
+                        break
+                    else:
+                        print('输入的序号无效')
+                break
     else:
         print('输入的序号无效')
 
