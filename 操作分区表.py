@@ -21,3 +21,9 @@ p_partition = {key + ' ('+file_name+')': value for key, value in {
    "创建Key分区":"create table 表名 () partition by key(字段) partitions 数字;",
 
 }.items()}
+
+v_test={
+   "额外添加一个Hash/Key分区 +":'alter table 表名1 add partition partitions 数字23;',
+   "额外减少一个Hash/Key分区 -":"alter table 表名2 coalesce partition 数字23;",
+}
+

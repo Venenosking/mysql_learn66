@@ -7,11 +7,13 @@
 # user_input = input("生成Hash分区表: ")
 
 import random,re,os
+import mysql.connector
 g_module=[]
 # 获取当前目录下以 操作 开头的py文件,并且导入它们的全部内容
-def get_import():
+current_dir = os.getcwd()
+def get_import(current_dir):
     # 获取当前目录
-    current_dir = os.getcwd()
+    # current_dir = os.getcwd()
     # 遍历当前目录下的所有文件
     for file_name in os.listdir(current_dir):
         # 判断文件名是否以 "操作" 开头，且是 .py 文件
@@ -19,8 +21,11 @@ def get_import():
             # 导入该文件的全部内容
             module_name = file_name[:-3]  # 去掉文件扩展名 .py
             g_module.append(module_name[2:])
-            module = __import__(module_name)
-            globals().update(vars(module))
+    for i, item in enumerate(g_module):
+        g_module[i] = f"{i + 1}. {item}"
+            
+            # module = __import__(module_name)
+            # globals().update(vars(module))
 # 获取p_开头的变量
 def get_var():
     # 创建一个字典，包含问题和答案
@@ -34,9 +39,10 @@ def get_var():
         qa_dict.update(i)
     # print('总共有'+str(len(qa_dict))+'个问题')
     # print('涉及: '+','.join(g_module))
+    
     # 给列表添加序号
-    for i, item in enumerate(g_module):
-        g_module[i] = f"{i+1}. {item}"
+    # for i, item in enumerate(g_module):
+    #     g_module[i] = f"{i+1}. {item}"
     # print(g_module)
     print('快速生成: '+','.join(g_module))
 
@@ -97,10 +103,123 @@ def get_choice(new_g_module,last_learn):
     print('你选择快速生成: ' + ','.join(new_g_module))
 
 if __name__ == "__main__":
-    get_import()        # 获取当前目录下以 操作 开头的py文件,并且导入它们的全部内容
-    get_var()           # 获取p_开头的变量
-    user_input=get_input(ture_str)             # 获取输入的数字
-    get_choice(new_g_module,last_learn)        # 输出用户选择的内容
+    # get_import(current_dir)                      # 获取当前目录下以 操作 开头的py文件,并且导入它们的全部内容
+    # get_var()                                  # 获取p_开头的变量
+    # user_input=get_input(ture_str)             # 获取输入的数字
+    # get_choice(new_g_module,last_learn)        # 输出用户选择的内容
     
+    # print('快速生成: '+','.join(g_module))
+    # user_input = get_input(ture_str)  # 获取输入的数字
+    # # print(user_input)
+    # get_choice(new_g_module, last_learn)  # 输出用户选择的内容
     
+    # Python程序,找出当前目录下以操作开头的py文件,找出来以后把它们的文件名去掉py后缀和操作这两个字,然后放在一个列表里面,并给每个文件名前面加上一个序号,然后用户输入对应的序号,就导入对应的py文件以v_开头的变量,然后给这个变量的key加上序号,再把key打印出来,当用户输入对应的序号,则输出对应的Key内容
+
+    import os
+
+    # 获取当前目录下所有以"操作"开头的py文件
+    files = [f for f in os.listdir('.') if f.startswith('操作') and f.endswith('.py')]
+
+    # 去掉文件名中的"操作"和".py"后缀
+    file_names = [f[2:-3] for f in files]
+
+    # 给每个文件名前面加上序号
+    file_list = []
+    for i, f in enumerate(file_names, 1):
+        file_list.append(f'{i}. {f}')
+
+    # 打印文件列表
+    print(','.join(file_list))
+
+    # 用户输入对应的序号
+    num = int(input('请输入对应的序号: '))
+
+    # 导入对应的py文件以v_开头的变量
+    if num > 0 and num <= len(files):
+        module_name = files[num - 1][:-3]  # 去掉".py"后缀
+        print('你选择的是: '+module_name[2:])
+        module = __import__(module_name)
+
+        # 获取以"v_"开头的变量名列表
+        var_names = [var_name for var_name in dir(module) if var_name.startswith('v_')]
+
+        # 给每个变量名前面加上序号
+        var_list = []
+        for i, var_name in enumerate(var_names, 1):
+            var_value = getattr(module, var_name)
+
+            # 给每个key前面加上序号
+            key_list = []
+            for j, key in enumerate(var_value.keys(), 1):
+                # key_list.append(f'{j}. {key}: {var_value[key]}')
+                key_list.append(f'{j}. {key}')
+
+            # 打印key列表
+            # print(f'{i}. {var_name}:')
+            print('\n'.join(key_list))
+
+            # 用户输入对应的序号
+            key_num = int(input('请输入对应的序号: '))
+
+            # 输出对应的Key内容
+            if key_num > 0 and key_num <= len(var_value):
+                key = list(var_value.keys())[key_num - 1]
+                print(f'{key}: {var_value[key]}')
+            else:
+                print('输入的序号无效')
+    else:
+        print('输入的序号无效')
+
+# Python程序,循环遍历出字符串中的所有中文,并且一个中文到下一个空格为止才能算一个中文,并且每找到一个中文,就提示用户输入一个值来替换这个中文
+    import re
+    def replace_chinese_chars(string):
+        pattern = re.compile('([\u4e00-\u9fa5]+)\d*')
+        while True:
+            match = pattern.search(string)
+            if match is None:
+                break
+            # chinese_chars = match.group(1)
+            chinese_chars = match.group(0)
+            replacement = input(f'请为中文"{chinese_chars}"输入一个替换值: ')
+            
+            string = string[:match.start(1)] + replacement + string[match.end(0):]
+            print(string)
+        return string
+
+    new_string = replace_chinese_chars(var_value[key])
+    print('最终的命令是: '+new_string+'    '+key+'')
+    input("输入任意键将在Mysql中执行该命令...\n")
+    # 这里写下一步操作的代码
+
+    # python程序,如何在cmd中运行字符串'alter table xie coalesce partition 8;'
+#     import mysql.connector
+
+    # 连接MySQL数据库
+    connection = mysql.connector.connect(
+        host='localhost',
+        user='root',
+        password='123456',
+        database='stu_tea'
+    )
+
+    # 执行SQL查询
+    cursor = connection.cursor()
+    # cursor.execute('SELECT * FROM customers')
+    try:
+        cursor.execute(new_string)
+    except:
+        print('命令运行错误!\n')
+    # result = cursor.fetchall()
     
+    cursor.execute('show create table t4 ;')
+    result = cursor.fetchall()
+    # 打印查询结果
+    for row in result:
+        print(row)
+
+    # 关闭数据库连接
+    connection.close()
+
+
+
+
