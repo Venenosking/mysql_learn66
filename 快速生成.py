@@ -137,21 +137,42 @@ if __name__ == "__main__":
     # 导入对应的py文件以v_开头的变量
     if num > 0 and num <= len(files):
         module_name = files[num - 1][:-3]  # 去掉".py"后缀
-        print('你选择的是: '+module_name[2:])
+        print('你选择的是: '+module_name[2:]+'  '+'+增 -删 *改 /查')
+        while True:
+            char_num = input("请输入上述对应的符号 : ")
+            print('')
+            if char_num not in ['+','-','*','/']:
+                continue
+            else:
+                break
+        
+        
         module = __import__(module_name)
-
         # 获取以"v_"开头的变量名列表
         var_names = [var_name for var_name in dir(module) if var_name.startswith('v_')]
-
+        # print(var_names)
+        # for i in var_names:
+        #     print(getattr(module, i))
+        # print(666)
         # 给每个变量名前面加上序号
         var_list = []
+        var_value = {}
+        # 获取v_字典数据
         for i, var_name in enumerate(var_names, 1):
-            var_value = getattr(module, var_name)
-
+            new_data = getattr(module, var_name)
+            # print(var_value)
             # 给每个key前面加上序号
             key_list = []
+            for kk in new_data.keys():
+                if char_num == kk[len(kk) - 1]:
+                    var_value[kk] = new_data[kk]
+            
+            # if char_num == key[len(key) - 1]:
             for j, key in enumerate(var_value.keys(), 1):
                 # key_list.append(f'{j}. {key}: {var_value[key]}')
+                # print(key)
+                # 判断输入的符号是否等于key的最后一个字符 + - * /
+                # if char_num ==key[len(key) - 1]:
                 key_list.append(f'{j}. {key}')
 
             # 打印key列表
