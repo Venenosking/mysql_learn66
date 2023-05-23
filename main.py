@@ -2,8 +2,64 @@
 # 写一个Python程序,先把问题分类,然后从里面随便抽取一个问题,然后获取用户输入,用户输入完之后,在把对应的答案输出来,循环上述操作,直到所有问题都被抽取完
 # 写一个Python程序,查看当前目录下是否有操作开头的py文件,有的话就导入该文件的全部内容
 import random,re
-# from 操作数据表 import *
-# from 操作视图 import *
+# --------------------------------------------------------------------------------------- 
+
+import os
+
+# 获取当前目录下所有以"操作"开头的py文件
+files = [f for f in os.listdir('.') if f.startswith('操作') and f.endswith('.py')]
+
+# 去掉文件名中的"操作"和".py"后缀
+file_names = [f[2:-3] for f in files]
+
+# 给每个文件名前面加上序号
+file_list = []
+for i, f in enumerate(file_names, 1):
+    file_list.append(f'{i}. {f}')
+
+# 打印文件列表
+print('涉及: '+','.join(file_list))
+
+# 用户输入对应的序号
+num = int(input('请输入要练习的序号: '))
+
+# 导入对应的py文件以v_开头的变量
+if num > 0 and num <= len(files):
+    module_name = files[num - 1][:-3]  # 去掉".py"后缀
+    print('你选择的是: ' + module_name[2:])
+    module = __import__(module_name)
+
+    # 获取以"p_"开头的变量名列表
+    var_names = [var_name for var_name in dir(module) if var_name.startswith('p_')]
+
+    # 给每个变量名前面加上序号
+    var_list = []
+    for i, var_name in enumerate(var_names, 1):
+        var_value = getattr(module, var_name)
+        # print(var_value)    # p_字典列表
+        # 给每个key前面加上序号
+        key_list = []
+        for j, key in enumerate(var_value.keys(), 1):
+            key_list.append(f'{j}. {key}: {var_value[key]}')
+            # key_list.append(f'{j}. {key}')
+
+        # 打印key列表
+        # print(f'{i}. {var_name}:')
+        # print('\n'.join(key_list))
+
+        # 用户输入对应的序号
+        # key_num = int(input('请输入对应的序号: '))
+
+        # 输出对应的Key内容
+        # if key_num > 0 and key_num <= len(var_value):
+        #     key = list(var_value.keys())[key_num - 1]
+        #     print(f'{key}: {var_value[key]}' + '\n')
+        # else:
+        #     print('输入的序号无效')
+else:
+    print('输入的序号无效')
+
+# -------------------------------------------------------------------------------
 g_module=[]
 import os
 # 获取当前目录

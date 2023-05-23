@@ -164,7 +164,7 @@ if __name__ == "__main__":
             # 输出对应的Key内容
             if key_num > 0 and key_num <= len(var_value):
                 key = list(var_value.keys())[key_num - 1]
-                print(f'{key}: {var_value[key]}')
+                print(f'{key}: {var_value[key]}'+'\n')
             else:
                 print('输入的序号无效')
     else:
@@ -183,11 +183,11 @@ if __name__ == "__main__":
             replacement = input(f'请为中文"{chinese_chars}"输入一个替换值: ')
             
             string = string[:match.start(1)] + replacement + string[match.end(0):]
-            print(string)
+            print('    '+string)
         return string
 
     new_string = replace_chinese_chars(var_value[key])
-    print('最终的命令是: '+new_string+'    '+key+'')
+    print('最终的命令是:    '+new_string+'    '+key+'')
     input("输入任意键将在Mysql中执行该命令...\n")
     # 这里写下一步操作的代码
 
