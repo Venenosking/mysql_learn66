@@ -109,6 +109,7 @@ while files:
             except ValueError:
                 pass
         print('已经练习的项目是: '+','.join(has_lear))
+        del var_names,module
     else:
         print('输入的序号无效,请重新输入\n')
 print('\nSuccess,所有项目都练习完了!')
