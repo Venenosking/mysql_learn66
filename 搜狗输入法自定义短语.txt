@@ -17,9 +17,7 @@ ccyq,1=存储引擎
 cs,1=参数 
 kh,1=(
 kh,2=) 
-
-
-
+xdj,1=谢东杰 
 
 iden,1=identified by 
 or,1=or 
