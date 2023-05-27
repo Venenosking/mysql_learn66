@@ -1,37 +1,17 @@
-html_content = """
-<!DOCTYPE html>
-<html>
-<head>
-	<title>播放MP3文件</title>
-</head>
-<body>
-	<audio id="myAudio" controls>
-		<source src="测试.mp3" type="audio/mpeg">
-		Your browser does not support the audio element.
-	</audio>
+# https://ttsmaker.com/zh-cn
+# 语速 0.85
+string = 'create table 表名 () partition by list(字段)(partition 分区名 values in (具体值));'
+new_string = ""
 
-	<button onclick="playAudio()">播放</button>
-	<button onclick="pauseAudio()">暂停</button>
+for char in string:
+    if char == "(":
+        new_string += " 左括号 "
+    elif char == ")":
+        new_string += " 右括号 "
+    else:
+        new_string += char
 
-	<script>
-		var audio = document.getElementById("myAudio");
+# new_string = new_string.replace(" ", "((⏱️=400))",1)
+print("替换后的字符串为：", new_string)
 
-		function playAudio() {
-			audio.play();
-		}
 
-		function pauseAudio() {
-			audio.pause();
-		}
-	</script>
-</body>
-</html>
-"""
-
-# 将HTML内容写入文件
-with open("index.html", "w") as f:
-    f.write(html_content)
-
-# 将MP3文件复制到HTML文件所在的目录
-import shutil
-# shutil.copyfile("测试.mp3", "index_files/测试.mp3")
