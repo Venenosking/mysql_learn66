@@ -23,12 +23,12 @@ def ai_reader_value(string):
     new_string = new_string.replace("d ", "d的 ")
     new_string = new_string.replace("/", "或者")
     new_string = new_string.replace("-", "-杠").replace("*", "星号").\
-        replace("mysql", "买色抠((⏱️=400))").replace(".", "((⏱️=400))点((⏱️=400))").replace(" to ", " 兔 ")
+        replace("mysql", "买色抠((⏱️=400))").replace(".", "((⏱️=400))点((⏱️=400))").replace(" to ", " 兔 ").replace(",", "((⏱️=400))逗号((⏱️=400))")
     
     # 句中加800ms间隔时间 
     new_string = new_string.replace(" ", "((⏱️=800))")
-    # 开头加1.5s间隔时间
-    new_string = '((⏱️=1500))'+new_string
+    # 开头加1.5s间隔时间,末尾加800ms间隔
+    new_string = '((⏱️=1500))'+new_string+'((⏱️=800))'
     # print("替换后的字符串为：", new_string)
     return new_string
 
