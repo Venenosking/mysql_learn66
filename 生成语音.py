@@ -19,6 +19,7 @@ def ai_reader_value(string):
     new_string = new_string.replace("s ", "s寺 ")
     new_string = new_string.replace("t ", "t忑 ")
     new_string = new_string.replace("d ", "d的 ")
+    new_string = new_string.replace("/", "或者")
     # 句中加400ms间隔时间 
     new_string = new_string.replace(" ", "((⏱️=400))")
     # 开头加1.5s间隔时间
