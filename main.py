@@ -48,18 +48,27 @@ try:
                 module = __import__(module_name)
                 # print('你选择的是: ' + module_name[2:])
                 # 获取以"p_"开头的变量名列表
-                var_names =[var_name for var_name in dir(module) if var_name.startswith('p_')]
+                # var_names =[var_name for var_name in dir(module) if var_name.startswith('p_')]
+                
+                var_na =[getattr(module, var_name) for var_name in dir(module) if var_name.startswith('p_')]
+                for i in var_na:
+                    varna2=i()
+                    # print(varna2)
+                var_names = [(key, value) for key, value in varna2.items()]
+                    
                 # print(var_names)
                 # 给每个变量名前面加上序号
                 # var_list = []
-                for i, var_name in enumerate(var_names, 1):
-                    var_value2 = getattr(module, var_name)
-                    var_value.update(var_value2)
+                var_value=varna2
+                # for i, var_name in enumerate(var_names, 1):
+                    # var_value2 = getattr(module, var_name)
+                    # var_value.update(var_value2)
+                    
                     # print(var_value)    # p_字典列表
                     # 给每个key前面加上序号
                     # key_list = []
-                    for j, key in enumerate(var_value.keys(), 1):
-                        key_list.append(f'{j}. {key}: {var_value[key]}')
+                for j, key in enumerate(var_value.keys(), 1):
+                    key_list.append(f'{j}. {key}: {var_value[key]}')
                         # key_list.append(f'{j}. {key}')
                 # print(list(var_value.keys()))
             print('你选择的是: ' + ','.join(choice_list))
