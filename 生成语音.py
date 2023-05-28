@@ -1,12 +1,9 @@
 # https://ttsmaker.com/zh-cn
 # 语速 0.85
 import re
-string = 'create table 表名 () partition by list(字段)(partition 分区名 values in (具体值));'
-# string = 'alter table 表名 add partition partitions 数字;'
-# string = 'alter table 表名 reorganize partition 旧分区名1 into (partition 新分区名1 values less than (具体值));'
-
-# value
-def AI_reader(string):
+# string = 'create table 表名 () partition by list(字段)(partition 分区名 values in (具体值));'
+# 处理字典中的value
+def ai_reader_value(string):
     new_string = ""
     # 替换左右括号
     for char in string:
@@ -24,10 +21,9 @@ def AI_reader(string):
     new_string = new_string.replace("d ", "d的 ")
     # 句中加400ms间隔时间 
     new_string = new_string.replace(" ", "((⏱️=400))")
-    # 开头加2s间隔时间
-    new_string = '((⏱️=2000))'+new_string
-    
-    print("替换后的字符串为：", new_string)
+    # 开头加1.5s间隔时间
+    new_string = '((⏱️=1500))'+new_string
+    # print("替换后的字符串为：", new_string)
     return new_string
-AI_reader(string)
+
 

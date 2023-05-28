@@ -1,32 +1,7 @@
 
 import os,re
+from 生成语音 import ai_reader_value
 file_name = os.path.basename(__file__)[2:-3]
-
-
-def AI_reader(string):
-   new_string = ""
-   # 替换左右括号
-   for char in string:
-      if char == "(":
-         new_string += " 左括号 "
-      elif char == ")":
-         new_string += " 右括号 "
-      else:
-         new_string += char
-   # 合并多个空格
-   new_string = re.sub(r'\s+', ' ', new_string)
-   # 字符末尾是  s的替换成寺 t替换成忑 d替换成的  
-   new_string = new_string.replace("s ", "s寺 ")
-   new_string = new_string.replace("t ", "t忑 ")
-   new_string = new_string.replace("d ", "d的 ")
-   # 句中加400ms间隔时间 
-   new_string = new_string.replace(" ", "((⏱️=400))")
-   # 开头加2s间隔时间
-   new_string = '((⏱️=2000))' + new_string
-
-   # print("替换后的字符串为：", new_string)
-   return new_string
-
 
 p_partition = {key + ' ('+file_name+')': value for key, value in {
     
@@ -47,12 +22,19 @@ p_partition = {key + ' ('+file_name+')': value for key, value in {
 
 }.items()}
 
-# AI_reader()
+# -------------------------------生成AI语音字符串-------------------------------------------------
 # 去掉key中的()
 a_partition={re.sub(r'\([^)]*\)', '', key): value for key, value in p_partition.items()}
+# 遍历字典,生成AI语音字符串
 for key, value in a_partition.items():
-    print(key, value)
-# print(a_partition)
+    value=ai_reader_value(value)      
+    if "/" in key:
+       key = key.replace("/", "或者")      # 把/替换成 或者
+    key='((⏱️=1500))'+key
+    print('\n',key, value)
+print('\n一共有 '+str(len(a_partition))+' 个')
+
+
 
 v_test={
    "额外添加一个Hash/Key分区 +":'alter table 表名1 add partition partitions 数字;',
