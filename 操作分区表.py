@@ -36,7 +36,7 @@ if __name__ == "__main__":
           key = key.replace("/", "或者")      # 把/替换成 或者
        key='((⏱️=1500))'+key
        print('\n',key, value)
-   print('\n一共有 '+str(len(a_part))+' 个')
+   print('\n一共有 '+str(len(a_part))+' 个'+' '+str(len(p_partitions())))
    
 
 # 快速生成.py的必要条件  v_开头的变量
