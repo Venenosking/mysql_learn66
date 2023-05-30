@@ -3,10 +3,31 @@
 import random,re,os 
 
 # 获取当前目录下所有以"操作"开头的py文件
-files = [f for f in os.listdir('.') if f.startswith('操作') and f.endswith('.py')]
+# files = [f for f in os.listdir('.') if f.startswith('操作') and f.endswith('.py')]
+# 
+# print(files)
+
+files=[]
+# 获取 xie 文件夹的路径
+xie_path = os.path.join(os.getcwd(), "代码")
+# print(xie_path)
+second_slash_index = xie_path.find("\\", xie_path.find("\\") + 1)
+result = xie_path[second_slash_index + 1:]
+# print(result)
+
+# 遍历 xie 文件夹下的所有文件，找到以 ".py" 结尾的文件
+for root, dirs, files2 in os.walk(xie_path):
+    for file in files2:
+        if file.startswith('操作') and file.endswith(".py"):
+            # 打印出文件路径
+            files.append(file)
+            # file_path = os.path.join(root, file)
+            
+
 
 # 已经练习的项目列表
 has_lear=[]
+module=None
 try:
     while files:
         # 去掉文件名中的"操作"和".py"后缀
@@ -41,25 +62,30 @@ try:
         if min(num) > 0 and max(num) <= len(files):
             # 本次选择的项目变量
             choice_list=[]
+            # print(num)
             for k in num:
                 module_name = files[k - 1][:-3]  # 去掉".py"后缀
                 has_lear.append(module_name[2:])
                 choice_list.append(module_name[2:])
-                module = __import__(module_name)
+                # module = __import__(module_name)
+                exec(f"from {result} import {module_name} as module")
+                # print(module)
                 # print('你选择的是: ' + module_name[2:])
                 # 获取以"p_"开头的变量名列表
                 # var_names =[var_name for var_name in dir(module) if var_name.startswith('p_')]
                 
                 var_na =[getattr(module, var_name) for var_name in dir(module) if var_name.startswith('p_')]
+                # print(var_na)
                 for i in var_na:
                     varna2=i()
                     # print(varna2)
                 var_names = [(key, value) for key, value in varna2.items()]
-                    
                 # print(var_names)
+                
                 # 给每个变量名前面加上序号
                 # var_list = []
-                var_value=varna2
+                var_value2=varna2
+                # print(var_value)
                 # for i, var_name in enumerate(var_names, 1):
                     # var_value2 = getattr(module, var_name)
                     # var_value.update(var_value2)
@@ -67,10 +93,12 @@ try:
                     # print(var_value)    # p_字典列表
                     # 给每个key前面加上序号
                     # key_list = []
-                for j, key in enumerate(var_value.keys(), 1):
-                    key_list.append(f'{j}. {key}: {var_value[key]}')
+                for j, key in enumerate(var_value2.keys(), 1):
+                    key_list.append(f'{j}. {key}: {var_value2[key]}')
+                var_value.update(var_value2)
                         # key_list.append(f'{j}. {key}')
                 # print(list(var_value.keys()))
+            # print(key_list)
             print('你选择的是: ' + ','.join(choice_list))
             print('总共有' + str(len(list(var_value.keys()))) + '个问题')
         # else:
