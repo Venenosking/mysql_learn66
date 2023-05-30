@@ -19,6 +19,7 @@ def ai_reader_value(string):
     new_string = re.sub(r'\s+', ' ', new_string)
     # 字符末尾是  s的替换成寺 t替换成忑 d替换成的  
     new_string = new_string.replace("s ", "s寺 ")
+    new_string = new_string.replace("s;", "s寺;")
     new_string = new_string.replace("t ", "t忑 ")
     new_string = new_string.replace("d ", "d的 ")
     new_string = new_string.replace("ke ", "ke可 ")
