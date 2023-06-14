@@ -5,6 +5,7 @@ from 生成语音 import ai_reader_value
 # -----------------生成AI语音字符串-------------------------------------------------
 # 去掉key中的()
 def final(p_views):
+    # print(p_views)
     # print(p_views.items())
     pp=p_views.items()
     # for i,j in p_views.items():

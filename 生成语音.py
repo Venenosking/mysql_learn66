@@ -24,6 +24,7 @@ def ai_reader_value(string):
     new_string = new_string.replace("d ", "d的 ")
     new_string = new_string.replace("ke ", "ke可 ")
     new_string = new_string.replace("/", "或者")
+    new_string = new_string.replace(";", "分号")
     new_string = new_string.replace("-", "-杠").replace("*", "星号").\
         replace("mysql", "买色抠((⏱️=400))").replace(".", "((⏱️=400))点((⏱️=400))").replace(" to ", " 兔 ").replace(",", "((⏱️=400))逗号((⏱️=400))")
     
