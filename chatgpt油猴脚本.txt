@@ -1,0 +1,274 @@
+// ==UserScript==
+// @name         OpenAI Chat Text-to-Speech
+// @run-at       document-end
+// @namespace    http://tampermonkey.net/
+// @version      1.4
+// @description  Adds a button to the OpenAI Chat page to convert the last div with class "markdown prose" to speech and a pause button to stop and resume the speech playback, respectively, and a play button to start the speech playback from the beginning, respectively, with the ability to loop through each "p" tag and read its content one at a time while setting its background color to black during reading, respectively
+// @author       Your Name
+// @match        https://chat.openai.com/c*
+// @grant        none
+// ==/UserScript==
+(function() {
+   // Create a button element and add it to the page
+//console.clear();
+
+window.ischeck=1;
+let divElement=null;
+const divElements = document.querySelectorAll('.markdown.prose');
+
+for (const divElement2 of divElements) {
+  divElement2.addEventListener('click', (event) => {
+    event.stopPropagation();
+    divElement2.style.border = '2px solid red';
+    divElement=divElement2;
+    window.ischeck=0;
+  });
+}
+
+document.addEventListener('click', () => {
+  for (const divElement2 of divElements) {
+    divElement2.style.border = '';
+    //ischeck=1;
+    //ischeck=false;
+  }
+});
+
+
+
+
+let speech = null;
+let isPaused = false;
+let pIndex = 0;
+let pList = null;
+let isFirstTime = true;
+let lastDiv=null;
+
+const button = document.createElement('button');
+button.innerHTML = '开始';
+button.style.position = 'fixed';
+button.style.right = '200px';
+button.style.bottom = '200px';
+document.body.appendChild(button);
+
+const resetbutton = document.createElement('button');
+resetbutton.innerHTML = '重置';
+resetbutton.style.position = 'fixed';
+resetbutton.style.right = '200px';
+resetbutton.style.bottom = '400px';
+document.body.appendChild(resetbutton);
+
+resetbutton.addEventListener('click', () => {
+    window.ischeck=1;
+
+
+});
+
+
+const nextbutton = document.createElement('button');
+nextbutton.innerHTML = '播放下一个';
+nextbutton.style.position = 'fixed';
+nextbutton.style.right = '200px';
+nextbutton.style.bottom = '350px';
+document.body.appendChild(nextbutton);
+
+nextbutton.addEventListener('click', () => {
+    //console.log('当前下一个状态是:'+ window.ischeck);
+    pauseButton.innerText = '暂停';
+    isPaused = false;
+
+    if (window.ischeck){
+
+        const divs = document.querySelectorAll('div.markdown.prose');
+        lastDiv = divs[divs.length - 1];
+        //console.log(lastDiv);
+    }else{
+        lastDiv=divElement;
+        //ischeck=0;
+    }
+
+
+    pList = lastDiv.querySelectorAll('p');
+    for (let i=0;i<pList.length;i++){
+         pList[i].style.backgroundColor = '';
+        //console.log(i);
+    }
+
+    if (pIndex < pList.length && pList.length-pIndex >1){
+        pIndex = pIndex+1;
+
+    }
+    if (pIndex == pList.length) {
+        pIndex = pIndex-1;
+    }
+
+
+    readNextP();
+
+
+});
+
+
+
+const lastbutton = document.createElement('button');
+lastbutton.innerHTML = '播放上一个';
+lastbutton.style.position = 'fixed';
+lastbutton.style.right = '200px';
+lastbutton.style.bottom = '300px';
+document.body.appendChild(lastbutton);
+
+lastbutton.addEventListener('click', () => {
+    //console.log('当前上一个状态是:'+window.ischeck);
+    pauseButton.innerText = '暂停';
+    isPaused = false;
+    if (window.ischeck){
+
+        const divs = document.querySelectorAll('div.markdown.prose');
+        lastDiv = divs[divs.length - 1];
+        //console.log(lastDiv);
+    }else{
+        lastDiv=divElement;
+        //ischeck=1;
+    }
+
+
+    pList = lastDiv.querySelectorAll('p');
+    for (let i=0;i<pList.length;i++){
+         pList[i].style.backgroundColor = '';
+        //console.log(i);
+    }
+    if (pIndex>0){
+        pIndex = pIndex-1;
+
+    }
+
+
+    readNextP();
+
+
+});
+
+
+
+const pauseButton = document.createElement('button');
+pauseButton.innerHTML = '暂停';
+pauseButton.style.position = 'fixed';
+pauseButton.style.right = '200px';
+pauseButton.style.bottom = '250px';
+document.body.appendChild(pauseButton);
+
+pauseButton.addEventListener('click', () => {
+        if (speech) {
+            if (isPaused) {
+                speechSynthesis.resume();
+                isPaused = false;
+                //pauseButton.innerHTML = '';
+                pauseButton.innerText = '暂停';
+            } else {
+                speechSynthesis.pause();
+                isPaused = true;
+                //pauseButton.innerHTML = '';
+                pauseButton.innerText = '继续播放';
+            }
+        }
+});
+
+button.addEventListener('click', () => {
+    //console.log("开始状态:"+ window.ischeck);
+    pauseButton.innerText = '暂停';
+    isPaused = false;
+    if (divElements.length==0){
+        const divElements = document.querySelectorAll('.markdown.prose');
+        //console.log('初始值:'+divElements.length);
+
+        for (const divElement2 of divElements) {
+            //console.log(divElement2);
+            divElement2.addEventListener('click', (event) => {
+                event.stopPropagation();
+                const divpara = document.getElementsByTagName('div');
+                for (const p1 of divpara) {
+                    p1.style.border = '';
+                }
+                divElement2.style.border = '2px solid red';
+                divElement=divElement2;
+                window.ischeck=0;
+                const paragraphs = document.getElementsByTagName('p');
+                for (const p of paragraphs) {
+                    p.style.backgroundColor = '';
+                }
+
+            });
+        }
+        document.addEventListener('click', () => {
+            for (const divElement2 of divElements) {
+                divElement2.style.border = '';
+                //ischeck=1;
+                //ischeck=false;
+            }
+        });
+    }
+
+    if (window.ischeck){
+
+        const divs = document.querySelectorAll('div.markdown.prose');
+        lastDiv = divs[divs.length - 1];
+        //console.log(lastDiv);
+    }else{
+        lastDiv=divElement;
+        //ischeck=0;
+    }
+
+
+    pList = lastDiv.querySelectorAll('p');
+
+    for (let i=0;i<pList.length;i++){
+         pList[i].style.backgroundColor = '';
+        //console.log(i);
+    }
+
+    pIndex = 0;
+    readNextP();
+
+
+});
+
+function readNextP() {
+        if (pIndex < pList.length) {
+            if (speech) {
+
+                speechSynthesis.cancel();
+            }
+            const p = pList[pIndex];
+            p.style.backgroundColor = 'black';
+
+            p.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            const text = p.textContent.trim();
+
+            //console.log(pIndex+text);
+
+
+
+            speech = new SpeechSynthesisUtterance(text);
+            speechSynthesis.speak(speech);
+            //pIndex++;
+
+            speech.addEventListener('end', () => {
+                p.style.backgroundColor = '';
+                //speech = null;
+                isPaused = false;
+                //pauseButton.innerHTML = 'Pause Speech';
+
+                pIndex++;
+                readNextP();
+
+            });
+
+
+
+        }
+    }
+
+
+
+})();
+
