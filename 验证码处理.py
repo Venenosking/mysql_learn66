@@ -42,7 +42,7 @@ a标签 id='reVerify'
 img标签 id='VerifyCaptchaIMG'
 id='RadioUserSelectAnnouncerID203'
 overflow-y:scroll
+id='tts_order_submit'
 class='border-bottom pb-1'
 帮我写一个油猴脚本,要求如下:
-1.当我点击 id='UserInputCaptcha'的textarea标签的时候, id='VerifyCaptchaIMG'的img标签也会跟着一起自动点击
-2.把包含'border-bottom pb-1'的class的div,滚动到最低部,这个div的样式中包含overflow-y:scroll 我想把他滚动到最低部
+1.当我敲击enter的时候,自动点击 id='tts_order_submit'的button按钮

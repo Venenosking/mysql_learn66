@@ -13,6 +13,14 @@
     'use strict';
 
     // Your code here...
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            var button = document.getElementById('tts_order_submit');
+            if (button) {
+                button.click();
+            }
+        }
+    });
      // 获取 textarea 和 img 元素
     var userInputCaptcha = document.getElementById('UserInputCaptcha');
     var verifyCaptchaImg = document.getElementById('VerifyCaptchaIMG');
