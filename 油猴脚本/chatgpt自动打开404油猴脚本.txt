@@ -1,0 +1,32 @@
+// ==UserScript==
+// @name         自动打开404页面
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://chat.openai.com/c*
+// @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // Your code here...
+     // 等待页面加载完成
+    window.addEventListener('load', function() {
+        // 保存原始页面的窗口对象
+        var originalWindow = window;
+
+        // 创建一个定时器，延迟打开链接
+        setTimeout(function() {
+            // 打开新标签页并加载指定链接
+            var newWindow = window.open("https://chat.openai.com/404", "_blank");
+
+            // 将焦点设置回原来的页面
+            originalWindow.focus();
+        }, 1000); // 延迟1秒打开链接
+    });
+
+
+})();

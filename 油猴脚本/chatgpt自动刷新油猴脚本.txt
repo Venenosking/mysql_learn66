@@ -1,0 +1,43 @@
+// ==UserScript==
+// @name         chatgpt自动刷新
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://chat.openai.com/404
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=userscript.zone
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // 设置刷新间隔时间（单位：毫秒）
+    var minInterval = 3 * 60 * 1000; // 3分钟的毫秒数
+    var maxInterval = 5 * 60 * 1000; // 5分钟的毫秒数
+    var refreshInterval = Math.floor(Math.random() * (maxInterval - minInterval + 1)) + minInterval;
+
+    // 创建显示倒计时的元素
+    var countdownElement = document.createElement('div');
+    countdownElement.style.display = 'none'; // 隐藏倒计时元素
+    document.body.appendChild(countdownElement);
+
+    // 定义倒计时函数
+    function countdown() {
+        var count = refreshInterval / 1000; // 转换为秒数
+        document.title = '倒计时：' + count + '秒';
+
+        var timer = setInterval(function() {
+            count--;
+            document.title = '倒计时：' + count + '秒';
+
+            if (count <= 0) {
+                clearInterval(timer);
+                location.reload(); // 刷新页面
+            }
+        }, 1000); // 每秒更新倒计时
+    }
+
+    countdown();
+
+})();
