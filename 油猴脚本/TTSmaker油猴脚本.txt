@@ -1,0 +1,40 @@
+// ==UserScript==
+// @name         点击输入框,验证码跟着一起点击
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://ttsmaker.com/zh-cn
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=ttsmaker.com
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // Your code here...
+     // 获取 textarea 和 img 元素
+    var userInputCaptcha = document.getElementById('UserInputCaptcha');
+    var verifyCaptchaImg = document.getElementById('VerifyCaptchaIMG');
+    var RadioUserSelectAnnouncerID203 = document.getElementById('RadioUserSelectAnnouncerID203');
+    var divs = document.getElementsByClassName('border-bottom pb-1');
+
+    // 给 textarea 元素添加点击事件监听器
+    userInputCaptcha.addEventListener('click', function() {
+        // 触发 img 元素的点击事件
+        verifyCaptchaImg.click();
+        RadioUserSelectAnnouncerID203.click();
+
+         // 滚动到最底部
+        for (var i = 0; i < divs.length; i++) {
+            var div = divs[i];
+            // 判断是否包含overflow-y:scroll样式
+            if (div.style.overflowY === 'scroll') {
+                div.scrollTop = div.scrollHeight; // 将滚动条滚动到最底部
+            }
+    }
+
+    });
+
+
+})();

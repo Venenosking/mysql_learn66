@@ -36,3 +36,13 @@ def enhance_colors_with_edge_detection(image_path, saturation_factor, brightness
 
 # 使用示例
 enhance_colors_with_edge_detection('999.jpg', saturation_factor=8, brightness_factor=4, contrast_factor=2.5)
+
+textarea标签 id='UserInputCaptcha'
+a标签 id='reVerify'
+img标签 id='VerifyCaptchaIMG'
+id='RadioUserSelectAnnouncerID203'
+overflow-y:scroll
+class='border-bottom pb-1'
+帮我写一个油猴脚本,要求如下:
+1.当我点击 id='UserInputCaptcha'的textarea标签的时候, id='VerifyCaptchaIMG'的img标签也会跟着一起自动点击
+2.把包含'border-bottom pb-1'的class的div,滚动到最低部,这个div的样式中包含overflow-y:scroll 我想把他滚动到最低部
